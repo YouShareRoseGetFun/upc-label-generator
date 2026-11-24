@@ -43,6 +43,6 @@ The drawing, the check digit, the PNG/SVG export and the print sheet all run in 
 
 ## About this repository
 
-This repository documents the project and is the place to report problems. The working tool is the website linked at the top: [getupclabel.com](https://getupclabel.com/). Earlier static-file versions of the site are kept on the `static-v1` branch for reference and are no longer deployed.
+This repository documents the project and is the place to report problems. The working tool is the website linked at the top: [getupclabel.com](https://getupclabel.com/). Earlier static-file versions of the site are kept on the `legacy-20261124` branch for reference and are no longer deployed.
 
 If something prints wrong, please open an issue with: the label sheet, your printer model, whether you used Fit to page, and what your scanner returned.
