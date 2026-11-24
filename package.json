@@ -1,0 +1,13 @@
+{
+  "name": "upc-a-barcode",
+  "version": "1.0.0",
+  "description": "UPC-A check digit, 95-module encoding and SVG output. No dependencies, Node and browser.",
+  "main": "upc-a.js",
+  "files": ["upc-a.js", "README.md"],
+  "keywords": ["upc", "upc-a", "barcode", "gs1", "gtin", "svg", "label"],
+  "license": "MIT",
+  "scripts": {
+    "test": "node examples/test-upca.js",
+    "demo": "node examples/node-svg.js 03600029145"
+  }
+}

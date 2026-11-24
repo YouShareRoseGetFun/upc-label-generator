@@ -41,6 +41,18 @@ The check digit only proves the arithmetic of the 12 digits is right. It says no
 
 The drawing, the check digit, the PNG/SVG export and the print sheet all run in the browser. Product numbers and names never leave the page — there is no server round-trip to upload them to.
 
+## Using the library
+
+`upc-a.js` has no dependencies and works in Node and the browser.
+
+```js
+const UPCA = require("./upc-a.js");
+
+UPCA.checkDigit("03600029145");        // 2
+UPCA.normalize("03600029145").digits;  // "036000291452"
+UPCA.modules("036000291452").length;   // 95
+UPCA.svg("03600029145");               // <svg …> string at nominal size
+
 ## About this repository
 
 This repository documents the project and is the place to report problems. The working tool is the website linked at the top: [getupclabel.com](https://getupclabel.com/). Earlier static-file versions of the site are kept on the `legacy-20261124` branch for reference and are no longer deployed.
