@@ -37,3 +37,6 @@ assert.ok(Math.abs(w - 1.469) < 0.002, "nominal width, got " + w);
 assert.ok(hh > 1 && hh < 1.35, "height must be inches, got " + hh);
 
 console.log("all UPC-A checks passed");
+
+var ys = out.match(/y="-?[\d.]+"/g) || [];
+assert.ok(ys.every(function (v) { return Number(v.slice(3, -1)) >= 0; }), "no rect above the viewBox");

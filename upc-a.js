@@ -88,14 +88,14 @@
     var bodyW = MODULES * unit;
     var textH = opts.showText === false ? 0 : 0.14 * s; // inches, same unit as width
     var width = q * 2 + bodyW;
-    var height = h + textH + 0.04 * s;
+    var height = guardX * 2 + h + textH + 0.04 * s;   // headroom for guard bars
 
     var rects = "";
     for (var i = 0; i < MODULES; i++) {
       if (m.charAt(i) !== "1") continue;
       // Guard bars run 5 modules longer than the data bars so bar heights
       // still read correctly when a scanner sees a partially covered label.
-      var top = isGuard(i) ? -guardX : 0;
+      var top = isGuard(i) ? 0 : guardX;
       var tall = isGuard(i) ? h + guardX * 2 : h;
       rects += '<rect x="' + (q + i * unit).toFixed(4) +
                '" y="' + top.toFixed(4) +
@@ -110,7 +110,7 @@
       // remaining ten sit under the body, same as a printed UPC-A.
       text =
         '<text x="' + (q - unit).toFixed(4) + '" y="' + (h + textH).toFixed(4) +
-        '" text-anchor="middle">' + d.charAt(0) + "</text>" +
+        "</text>" +
         '<text x="' + (q + bodyW / 2).toFixed(4) + '" y="' + (h + textH).toFixed(4) +
         '" text-anchor="middle" letter-spacing="' + (unit * 1.4).toFixed(3) + '">' +
         d.slice(1, 11) + "</text>" +

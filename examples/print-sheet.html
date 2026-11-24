@@ -9,7 +9,7 @@
   .grid { display: grid; grid-template-columns: repeat(3, 2.625in); gap: 0; }
   .label { width: 2.625in; height: 1in; display: flex; flex-direction: column;
            align-items: center; justify-content: center; overflow: hidden; }
-  .label svg { height: 0.72in; width: auto; }
+  .label svg { width: 1.469in; height: auto; }
   .label .name { font-size: 7px; text-transform: uppercase; letter-spacing: .04em; }
   @media print { .hint { display: none; } }
   .hint { padding: 8px; background: #fffbe6; border-bottom: 1px solid #e8d98a; }
@@ -35,7 +35,7 @@
     var digits = NUMBERS[n % NUMBERS.length];
     var cell = document.createElement("div");
     cell.className = "label";
-    cell.innerHTML = UPCA.svg(digits, { showText: true, scale: 0.55 });
+    cell.innerHTML = UPCA.svg(digits, { showText: true, height: 0.6 });
     if (NAME) {
       var cap = document.createElement("div");
       cap.className = "name";
