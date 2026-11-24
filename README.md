@@ -1,64 +1,48 @@
-# Get UPC Label
+# UPC Label Generator
 
-Static UPC-A generator. Deploy this directory as the Cloudflare static asset directory; no build step is needed. All runtime scripts are local in `assets/vendor/`.
+**A free, browser-only UPC-A barcode and label sheet generator — [getupclabel.com](https://getupclabel.com/)**
 
-Run regression checks with `node --test tests/app.test.cjs`. These use a DOM/PDF stub to check validation, preview limits, export counts and placement; they do not replace browser or physical scanner testing.
+Type 11 digits and get a scannable UPC-A symbol with the check digit already computed. Preview it on a US Letter Avery sheet, print at 100%, scan one and you are done. No account, no upload, no daily limit — the barcode is drawn in the tab you are reading this in.
 
-## Before production
+## What it does
 
-- In a fresh browser session, generate `03600029145` → `036000291452` and `01234567890` → `012345678905`. Reject `036000291453`, empty values, letters and 10 digits.
-- Block `cdn.jsdelivr.net`: generation and all three downloads should still work.
-- Test 500 CSV rows (20 previews, all accepted rows exported), leading zeros, malformed files and the 1,500-label limit. Keep UPC spreadsheet cells as text.
-- Test Safari on iPhone and Chrome on Android: file selection, PNG/SVG/PDF downloads.
-- Print at actual size on Letter paper. Check Avery 5160 offsets (left about 4.8 mm, top 12.7 mm), scan the print, and check three pages for drift. Higher image resolution alone does not guarantee scanner compatibility.
-- Confirm production serves `/`, `/privacy`, `/terms`, `/contact`, `/assets/og-image.png`, `/robots.txt` and `/sitemap.xml`.
-- Bind `getupclabel.com`, then submit its sitemap to the verified Search Console property. Canonical and sitemap intentionally use the production hostname.
-- Disable the workers.dev preview URL or configure a host-specific `X-Robots-Tag: noindex` rule in Cloudflare for preview responses. Do not apply that rule to the production domain.
-- Add a public support email or accessible feedback URL to Contact when available. The private repository Issues URL is not a public support channel.
+- Computes the 12th check digit from 11 digits, or validates a full 12-digit UPC you paste in. Leading zeros are kept: 036000291452 and 36000291452 are not the same number.
+- Renders the UPC-A symbol at nominal size — 1.469 × 0.986 in (37.3 × 25.9 mm) — with the quiet zone the standard requires on both sides.
+- Lays the labels out on Avery 5160, 5163 and 5164 geometry on US Letter paper, so the preview matches where the labels actually land.
+- Exports PNG for documents, SVG for anything that needs to stay sharp, and a full print sheet of copies.
+- Prints an optional product name under the bars.
 
-Label geometry reference: https://www.avery.com/templates/5164 (4 inches across, 3⅓ inches down, six labels per Letter sheet). Physical printer alignment still requires testing.
+## Supported label sheets
 
-Vendored versions: JsBarcode 3.11.6, jsPDF 2.5.1, Papa Parse 5.4.1. Upstream copyright/license headers are retained. Review upstream updates before replacing these pinned files.
+| Sheet | Labels per page | Label size (in) |
+| --- | --- | --- |
+| Avery 5160 | 30 | 2.625 × 1 |
+| Avery 5163 | 10 | 4 × 2 |
+| Avery 5164 | 6 | 4 × 3⅓ |
 
-## Deployment verification
+## How to use it
 
-Cloudflare serves the three supporting HTML files at extensionless URLs. Keep
-`privacy.html`, `terms.html`, and `contact.html` as the source filenames; links,
-canonicals and sitemap entries use `/privacy`, `/terms`, and `/contact`.
+1. Enter 11 digits, or paste a full 12-digit UPC and let the tool verify the check digit.
+2. Optionally add a product name — it prints in small caps under the bars.
+3. Pick the sheet and how many copies you need.
+4. Download PNG or SVG, or press Print sheet.
 
-After deployment, fetch the sitemap from the deployed hostname and confirm these
-four entries: `/`, `/privacy`, `/terms`, `/contact` (all using the production domain
-inside the XML). If only the homepage appears, confirm the deployed commit and
-asset directory first, then check caching; the repository sitemap has four entries.
-Fetch each vendor script individually and verify it returns JavaScript with status
-200 rather than an HTML fallback. The sharing image is a verified 1200 × 630 PNG.
+## Getting the print size right
 
-## Content and release checks
+Print with **Actual size / 100%**, and turn **Fit to page off**. This is where most first attempts fail: a scaled-down barcode blurs and the scanner refuses it.
 
-The GS1 US pricing table is sourced from the official pricing page linked beside
-it. Last checked November 17, 2026. Verify the source and update the displayed date
-when changing prices; retain the distinction between free barcode generation and
-paid number licensing. Prices differ by GS1 organisation.
+Print one sheet on plain paper first and hold it against the real label stock — check the bottom row as well as the top, since scaling problems show up further down the page. Then scan one actual printed label with the scanner you will really use. A barcode that looks crisp on screen can still be too soft on paper.
 
-To identify the source release, run `git rev-parse HEAD` after committing the
-changes. Compare that full SHA with the source commit shown for the active
-production deployment in Cloudflare's deployment history. For manual asset
-uploads, record the source SHA when uploading. A private GitHub commit URL cannot
-prove the active production version to an unauthenticated visitor. The dashboard
-comparison requires account access and has not been performed by these local tests.
+## A valid barcode is not a licensed number
 
-## Asset directory and public version marker
+The check digit only proves the arithmetic of the 12 digits is right. It says nothing about ownership or whether a retailer will accept it. Numbers you invent are fine for shelf labels, stock rooms and internal tracking; to sell a product through retail or list it on a marketplace you need a GTIN assigned to your business, normally from GS1. If you are preparing marketplace listings rather than shelf labels, the notes on [Amazon barcode formats](https://getupclabel.com/amazon-barcode) cover what changes.
 
-This repository has no Wrangler configuration file. Its static site files are in
-the repository root, so use `.` as the asset/output directory in the deployment
-configuration and keep `.assetsignore` here. If a future build copies the website
-to `public` or `dist`, copy `.assetsignore` into that output directory as well.
-The dashboard asset directory must be checked separately.
+## Privacy
 
-`/version.txt` contains a release date and the short SHA of the source commit.
-Commit the site changes first, then write `2026-11-17 <source-short-sha>` to
-`version.txt` and commit that marker separately. The marker commit follows the
-source commit; its own SHA is intentionally different. Refresh the marker for
-each release. Confirm its contents after deployment, along with 404 responses
-for `/README.md` and `/tests/app.test.cjs`. Robots rules alone do not prevent
-files being served.
+The drawing, the check digit, the PNG/SVG export and the print sheet all run in the browser. Product numbers and names never leave the page — there is no server round-trip to upload them to.
+
+## About this repository
+
+This repository documents the project and is the place to report problems. The working tool is the website linked at the top: [getupclabel.com](https://getupclabel.com/). Earlier static-file versions of the site are kept on the `static-v1` branch for reference and are no longer deployed.
+
+If something prints wrong, please open an issue with: the label sheet, your printer model, whether you used Fit to page, and what your scanner returned.
