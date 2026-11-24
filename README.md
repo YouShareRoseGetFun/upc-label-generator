@@ -7,7 +7,7 @@ Type 11 digits and get a scannable UPC-A symbol with the check digit already com
 ## What it does
 
 - Computes the 12th check digit from 11 digits, or validates a full 12-digit UPC you paste in. Leading zeros are kept: 036000291452 and 36000291452 are not the same number.
-- Renders the UPC-A symbol at nominal size — 1.469 × 0.986 in (37.3 × 25.9 mm) — with the quiet zone the standard requires on both sides.
+- Renders the UPC-A symbol at nominal size — 1.469 × 1.02 in (37.3 × 25.9 mm) — with the quiet zone the standard requires on both sides.
 - Lays the labels out on Avery 5160, 5163 and 5164 geometry on US Letter paper, so the preview matches where the labels actually land.
 - Exports PNG for documents, SVG for anything that needs to stay sharp, and a full print sheet of copies.
 - Prints an optional product name under the bars.
@@ -52,6 +52,7 @@ UPCA.checkDigit("03600029145");        // 2
 UPCA.normalize("03600029145").digits;  // "036000291452"
 UPCA.modules("036000291452").length;   // 95
 UPCA.svg("03600029145");               // <svg …> string at nominal size
+```
 
 ## About this repository
 

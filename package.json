@@ -9,5 +9,8 @@
   "scripts": {
     "test": "node examples/test-upca.js",
     "demo": "node examples/node-svg.js 03600029145"
-  }
+  },
+  "repository": { "type": "git", "url": "git+https://github.com/YouShareRoseGetFun/upc-label-generator.git" },
+  "bugs": { "url": "https://github.com/YouShareRoseGetFun/upc-label-generator/issues" },
+  "homepage": "https://getupclabel.com/"
 }

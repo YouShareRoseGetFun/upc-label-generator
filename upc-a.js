@@ -86,9 +86,9 @@
     var h = barH * s;
     var q = quiet * unit;
     var bodyW = MODULES * unit;
-    var textH = opts.showText === false ? 0 : 14 * s;
+    var textH = opts.showText === false ? 0 : 0.14 * s; // inches, same unit as width
     var width = q * 2 + bodyW;
-    var height = h + textH + 4 * s;
+    var height = h + textH + 0.04 * s;
 
     var rects = "";
     for (var i = 0; i < MODULES; i++) {
@@ -119,8 +119,8 @@
     }
 
     var caption = opts.caption
-      ? '<text x="' + (width / 2).toFixed(4) + '" y="' + (height - 1 * s).toFixed(4) +
-        '" text-anchor="middle" font-size="' + (10 * s).toFixed(2) + '">' +
+      ? '<text x="' + (width / 2).toFixed(4) + '" y="' + (height - 0.01 * s).toFixed(4) +
+        '" text-anchor="middle" font-size="' + (0.09 * s).toFixed(4) + '">' +
         escapeXml(opts.caption) + "</text>"
       : "";
 
@@ -130,7 +130,7 @@
       '" role="img" aria-label="UPC-A ' + digits + '">' +
       '<rect width="100%" height="100%" fill="#fff"/>' +
       '<g fill="#000" font-family="Helvetica, Arial, sans-serif" font-size="' +
-      (13 * s).toFixed(2) + '">' + rects + text + caption + "</g></svg>"
+      (0.12 * s).toFixed(4) + '">' + rects + text + caption + "</g></svg>"
     );
   }
 

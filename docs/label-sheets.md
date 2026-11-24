@@ -20,9 +20,11 @@ leaves a margin at the top of the sheet for the printer to grip.
 
 ## A4 — 210 × 297 mm
 
-Avery's EU numbering is unrelated to the US codes above, so do not assume
-"5160 in A4" exists. The common A4 equivalents for 30-up are L7159 and, for the
-permanent line, L7160. Check your box.
+Avery's EU numbering is unrelated to the US codes above, and there is no A4
+sheet with the exact 5160 grid — 3 × 10 labels of 2.625 × 1 in does not fit
+210 × 297 mm. The nearest A4 products are in the L7159 and L7160 families.
+Read the label count and pitch printed on the box rather than assuming a US
+equivalent, because the same product number differs between countries.
 
 ## Module width and the 1.469 in symbol
 
@@ -42,4 +44,4 @@ Two causes, in order of frequency:
    scale to 100%, and margins to none.
 
 Measure the first symbol with a ruler after printing: it should be 1.469 in wide if
-you include the quiet zone, 1.313 in if you measure only the bars.
+you include the quiet zone, 1.235 in if you measure only the bars.

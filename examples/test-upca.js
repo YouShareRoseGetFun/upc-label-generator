@@ -18,14 +18,22 @@ assert.strictEqual(m.slice(0, 3), "101");
 assert.strictEqual(m.slice(45, 50), "01010");
 assert.strictEqual(m.slice(92), "101");
 
-// Left half always starts with a space module, right half with a bar.
+// Left half (L codes) always starts with a space module; right half (R codes) with a bar.
 for (var d = 0; d <= 9; d++) {
-  var half = UPCA.modules("0" + d + "0000000000").slice(4, 11);
-  assert.strictEqual(half.charAt(0), "0", "left digit " + d);
+  var left = UPCA.modules("0" + d + "0000000000").slice(10, 17);
+  assert.strictEqual(left.length, 7, "L[" + d + "] is 7 modules");
+  assert.strictEqual(left.charAt(0), "0", "L code " + d);
+  var right = UPCA.modules("000000" + d + "00000").slice(50, 57);
+  assert.strictEqual(right.length, 7, "R[" + d + "] is 7 modules");
+  assert.strictEqual(right.charAt(0), "1", "R code " + d);
 }
 
+// Output size must be in inches: 1.469 wide at nominal, and not 19 inches tall.
 var out = UPCA.svg("03600029145", { showText: true, caption: "Widget" });
 assert.ok(/^<svg /.test(out) && /<\/svg>$/.test(out));
-assert.ok(out.indexOf('width="1.469') === 0 - 1 || out.indexOf("in\"") > -1);
+var w = Number(/width="([\d.]+)in"/.exec(out)[1]);
+var hh = Number(/height="([\d.]+)in"/.exec(out)[1]);
+assert.ok(Math.abs(w - 1.469) < 0.002, "nominal width, got " + w);
+assert.ok(hh > 1 && hh < 1.35, "height must be inches, got " + hh);
 
 console.log("all UPC-A checks passed");
